@@ -7,10 +7,7 @@ import com.home.smoothieshop.exceptions.NotFoundException;
 import com.home.smoothieshop.model.NutritionalValue;
 import com.home.smoothieshop.model.Product;
 import com.home.smoothieshop.model.ProductRepository;
-import com.home.smoothieshop.model.enums.MacroNutrient;
-import com.home.smoothieshop.model.enums.MicroNutrient;
-import com.home.smoothieshop.model.enums.NutrientType;
-import com.home.smoothieshop.model.enums.NutrientUnit;
+import com.home.smoothieshop.model.enums.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,12 +47,26 @@ public class ProductService {
     }
 
     @Transactional
+    public long createProduct(ProductDto productPostDto) {
+        Product product = toProductEntity(productPostDto);
+        Product savedProduct = productRepository.save(product);
+
+        return savedProduct.getId();
+    }
+
+    @Transactional
+    public void updateProduct(long productId, ProductDto productDto) {
+        Product product = findProduct(productId);
+        mapBaseProductFields(product, productDto);
+        mapNutritionalValues(product, productDto.nutritionalValues());
+
+        productRepository.save(product);
+    }
+
+    @Transactional
     public void updateProductNutritionalValues(long productId, List<NutritionalValueDto> valuesDto) {
         Product product = findProduct(productId);
-        var dtoGroupedById = groupByNutritionalValueDtoById(valuesDto);
-        removeNutritionalValues(product, dtoGroupedById);
-        updateNutritionalValues(product, dtoGroupedById);
-        addNutritionalValues(product, valuesDto);
+        mapNutritionalValues(product, valuesDto);
 
         productRepository.save(product);
     }
@@ -64,6 +75,13 @@ public class ProductService {
         return productRepository
                 .findById(productId)
                 .orElseThrow(NotFoundException::new);
+    }
+
+    private void mapNutritionalValues(Product product, List<NutritionalValueDto> valuesDto) {
+        var dtoGroupedById = groupByNutritionalValueDtoById(valuesDto);
+        removeNutritionalValues(product, dtoGroupedById);
+        updateNutritionalValues(product, dtoGroupedById);
+        addNutritionalValues(product, valuesDto);
     }
 
     private Map<Long, List<NutritionalValueDto>> groupByNutritionalValueDtoById(List<NutritionalValueDto> valuesDto) {
@@ -172,5 +190,20 @@ public class ProductService {
 
     private MicroNutrientDto toMicroNutrientDto(MicroNutrient value) {
         return isNull(value) ? null : MicroNutrientDto.valueOf(value.name());
+    }
+
+    private Product toProductEntity(ProductDto productDto) {
+        Product product = new Product();
+        mapBaseProductFields(product, productDto);
+        productDto.nutritionalValues()
+                .forEach(dtoNutritionalValue -> product.addNutritionalValue(toNutritionalValueEntity(dtoNutritionalValue)));
+
+        return product;
+    }
+
+    private void mapBaseProductFields(Product product, ProductDto productDto) {
+        product.setProductType(ProductType.valueOf(productDto.productType().name()));
+        product.setName(productDto.name());
+        product.setBasicDetails(productDto.basicDetails());
     }
 }

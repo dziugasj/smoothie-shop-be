@@ -65,6 +65,7 @@ public class ProductService {
     private Map<Long, List<NutritionalValueDto>> groupByNutritionalValueDtoById(List<NutritionalValueDto> valuesDto) {
         return valuesDto
                 .stream()
+                .filter(dto -> Objects.nonNull(dto.id()))
                 .collect(groupingBy(NutritionalValueDto::id));
     }
 

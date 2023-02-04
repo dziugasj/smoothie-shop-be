@@ -1,6 +1,6 @@
 package com.home.smoothieshop.rest;
 
-import com.home.smoothieshop.dto.ProductDetailsDto;
+import com.home.smoothieshop.dto.NutritionalValueDto;
 import com.home.smoothieshop.dto.ProductDto;
 import com.home.smoothieshop.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/{id}/details")
-    public void updateProductDetails(@PathVariable long id, @RequestBody ProductDetailsDto productDetailsDto) {
+    public void updateProductDetails(@PathVariable long id, @RequestBody NutritionalValueDto nutritionalValueDto) {
 
 
 

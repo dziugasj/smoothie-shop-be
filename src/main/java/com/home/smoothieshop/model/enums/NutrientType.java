@@ -1,4 +1,5 @@
 package com.home.smoothieshop.model.enums;
 
-public enum NutritionalValueType {
+public enum NutrientType {
+    MACRO, MICRO
 }

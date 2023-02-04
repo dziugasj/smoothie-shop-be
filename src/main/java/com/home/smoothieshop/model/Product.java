@@ -16,6 +16,7 @@ public class Product {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ProductType productType;
 
     private String name;

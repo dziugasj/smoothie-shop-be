@@ -1,7 +1,9 @@
 package com.home.smoothieshop.model;
 
-import com.home.smoothieshop.model.enums.NutritionalValueType;
-import com.home.smoothieshop.model.enums.NutritionalValueUnit;
+import com.home.smoothieshop.model.enums.MacroNutrient;
+import com.home.smoothieshop.model.enums.MicroNutrient;
+import com.home.smoothieshop.model.enums.NutrientType;
+import com.home.smoothieshop.model.enums.NutrientUnit;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -19,12 +21,22 @@ public class NutritionalValue {
     private Product product;
 
     @Enumerated(EnumType.STRING)
-    private NutritionalValueType nutritionalValueType;
+    @Column(nullable = false)
+    private NutrientType nutrientType;
 
     @Enumerated(EnumType.STRING)
-    private NutritionalValueUnit nutritionalValueUnit;
+    @Column(nullable = false)
+    private MacroNutrient macroNutrient;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MicroNutrient microNutrient;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private NutrientUnit nutrientUnit;
+
+    private double nutrientValue;
 
     public NutritionalValue() {
     }
@@ -41,28 +53,44 @@ public class NutritionalValue {
         this.product = product;
     }
 
-    public NutritionalValueType getNutritionalValueType() {
-        return nutritionalValueType;
+    public NutrientType getNutrientType() {
+        return nutrientType;
     }
 
-    public void setNutritionalValueType(NutritionalValueType nutritionalValueType) {
-        this.nutritionalValueType = nutritionalValueType;
+    public void setNutrientType(NutrientType nutrientType) {
+        this.nutrientType = nutrientType;
     }
 
-    public NutritionalValueUnit getNutritionalValueUnit() {
-        return nutritionalValueUnit;
+    public MacroNutrient getMacroNutrient() {
+        return macroNutrient;
     }
 
-    public void setNutritionalValueUnit(NutritionalValueUnit nutritionalValueUnit) {
-        this.nutritionalValueUnit = nutritionalValueUnit;
+    public void setMacroNutrient(MacroNutrient macroNutrient) {
+        this.macroNutrient = macroNutrient;
     }
 
-    public String getName() {
-        return name;
+    public MicroNutrient getMicroNutrient() {
+        return microNutrient;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMicroNutrient(MicroNutrient microNutrient) {
+        this.microNutrient = microNutrient;
+    }
+
+    public NutrientUnit getNutrientUnit() {
+        return nutrientUnit;
+    }
+
+    public void setNutrientUnit(NutrientUnit nutrientUnit) {
+        this.nutrientUnit = nutrientUnit;
+    }
+
+    public double getNutrientValue() {
+        return nutrientValue;
+    }
+
+    public void setNutrientValue(double nutrientValue) {
+        this.nutrientValue = nutrientValue;
     }
 
     @Override

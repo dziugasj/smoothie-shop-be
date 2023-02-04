@@ -1,4 +1,6 @@
 package com.home.smoothieshop.dto;
 
-public record ProductDto(long id, String name) {
+import java.util.List;
+
+public record ProductDto(long id, String name, List<NutritionalValueDto> details) {
 }

@@ -6,6 +6,7 @@ import com.home.smoothieshop.model.Product;
 import com.home.smoothieshop.model.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -31,6 +32,6 @@ public class ProductService {
     }
 
     private ProductDto toProductDto(Product product) {
-        return new ProductDto(product.getId(), product.getName());
+        return new ProductDto(product.getId(), product.getName() , Collections.emptyList());
     }
 }

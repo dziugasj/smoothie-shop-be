@@ -1,9 +1,11 @@
 CREATE TABLE nutritional_value (
    id BIGINT AUTO_INCREMENT NOT NULL,
    product_id BIGINT,
-   nutritional_value_type VARCHAR(255),
-   nutritional_value_unit VARCHAR(255),
-   name VARCHAR(255),
+   nutrient_type VARCHAR(255) NOT NULL,
+   macro_nutrient VARCHAR(255) NOT NULL,
+   micro_nutrient VARCHAR(255) NOT NULL,
+   nutrient_unit VARCHAR(255) NOT NULL,
+   nutrient_value DOUBLE NOT NULL,
    CONSTRAINT pk_nutritional_value PRIMARY KEY (id)
 );
 

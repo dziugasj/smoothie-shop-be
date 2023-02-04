@@ -5,11 +5,13 @@ import com.home.smoothieshop.dto.enums.MicroNutrientDto;
 import com.home.smoothieshop.dto.enums.NutrientTypeDto;
 import com.home.smoothieshop.dto.enums.NutrientUnitDto;
 
+import javax.validation.constraints.NotNull;
+
 public record NutritionalValueDto(Long id,
-                                  NutrientTypeDto nutrientType,
+                                  @NotNull NutrientTypeDto nutrientType,
                                   MacroNutrientDto macroNutrient,
                                   MicroNutrientDto microNutrient,
-                                  NutrientUnitDto nutrientUnit,
-                                  double nutrientValue
+                                  @NotNull NutrientUnitDto nutrientUnit,
+                                  @NotNull Double nutrientValue
 ) {
 }

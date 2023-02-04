@@ -103,4 +103,16 @@ public class NutritionalValue {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "NutritionalValue{" +
+                "id=" + id +
+                ", nutrientType=" + nutrientType +
+                ", macroNutrient=" + macroNutrient +
+                ", microNutrient=" + microNutrient +
+                ", nutrientUnit=" + nutrientUnit +
+                ", nutrientValue=" + nutrientValue +
+                '}';
+    }
 }

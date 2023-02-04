@@ -26,9 +26,6 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NutritionalValue> nutritionalValues = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClientOrder> clientOrders = new ArrayList<>();
-
     public Product() {
     }
 
@@ -41,17 +38,7 @@ public class Product {
         nutritionalValues.remove(nutritionalValue);
         nutritionalValue.setProduct(null);
     }
-
-    public void addOrder(ClientOrder clientOrder) {
-        clientOrders.add(clientOrder);
-        clientOrder.setProduct(this);
-    }
-
-    public void removeOrder(ClientOrder clientOrder) {
-        clientOrders.remove(clientOrder);
-        clientOrder.setProduct(null);
-    }
-
+    
     public Long getId() {
         return id;
     }

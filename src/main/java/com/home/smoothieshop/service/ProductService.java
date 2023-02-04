@@ -102,12 +102,20 @@ public class ProductService {
     private NutritionalValue toNutritionalValueEntity(NutritionalValueDto dto) {
         NutritionalValue value = new NutritionalValue();
         value.setNutrientType(NutrientType.valueOf(dto.nutrientType().name()));
-        value.setMacroNutrient(MacroNutrient.valueOf(dto.macroNutrient().name()));
-        value.setMicroNutrient(MicroNutrient.valueOf(dto.microNutrient().name()));
+        value.setMacroNutrient(toMacroNutrient(dto.macroNutrient()));
+        value.setMicroNutrient(toMicroNutrient(dto.microNutrient()));
         value.setNutrientUnit(NutrientUnit.valueOf(dto.nutrientUnit().name()));
         value.setNutrientValue(dto.nutrientValue());
 
         return value;
+    }
+
+    private MacroNutrient toMacroNutrient(MacroNutrientDto dto) {
+        return isNull(dto) ? null : MacroNutrient.valueOf(dto.name());
+    }
+
+    private MicroNutrient toMicroNutrient(MicroNutrientDto dto) {
+        return isNull(dto) ? null : MicroNutrient.valueOf(dto.name());
     }
 
     private ProductDto toProductDto(Product product) {
@@ -131,10 +139,18 @@ public class ProductService {
         return new NutritionalValueDto(
                 value.getId(),
                 NutrientTypeDto.valueOf(value.getNutrientType().name()),
-                MacroNutrientDto.valueOf(value.getMacroNutrient().name()),
-                MicroNutrientDto.valueOf(value.getMicroNutrient().name()),
+                toMacroNutrientDto(value.getMacroNutrient()),
+                toMicroNutrientDto(value.getMicroNutrient()),
                 NutrientUnitDto.valueOf(value.getNutrientUnit().name()),
                 value.getNutrientValue()
         );
+    }
+
+    private MacroNutrientDto toMacroNutrientDto(MacroNutrient value) {
+        return isNull(value) ? null : MacroNutrientDto.valueOf(value.name());
+    }
+
+    private MicroNutrientDto toMicroNutrientDto(MicroNutrient value) {
+        return isNull(value) ? null : MicroNutrientDto.valueOf(value.name());
     }
 }

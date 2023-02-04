@@ -25,11 +25,9 @@ public class NutritionalValue {
     private NutrientType nutrientType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private MacroNutrient macroNutrient;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private MicroNutrient microNutrient;
 
     @Enumerated(EnumType.STRING)

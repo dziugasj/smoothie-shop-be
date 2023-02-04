@@ -27,12 +27,8 @@ public class ProductController {
         return productService.getProducts();
     }
 
-    @PostMapping("/products/{id}/details")
-    public void updateProductDetails(@PathVariable long id, @RequestBody NutritionalValueDto nutritionalValueDto) {
-
-
-
-
+    @PutMapping("/products/{id}/details")
+    public void updateProductDetails(@PathVariable long id, @RequestBody List<NutritionalValueDto> nutritionalValueDto) {
+        productService.updateProductNutritionalValues(id, nutritionalValueDto);
     }
-
 }

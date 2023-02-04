@@ -38,7 +38,11 @@ public class Product {
         nutritionalValues.remove(nutritionalValue);
         nutritionalValue.setProduct(null);
     }
-    
+
+    public List<NutritionalValue> getNutritionalValues() {
+        return nutritionalValues;
+    }
+
     public Long getId() {
         return id;
     }

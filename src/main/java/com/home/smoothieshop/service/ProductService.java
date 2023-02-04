@@ -78,9 +78,7 @@ public class ProductService {
 
     private void removeNutritionalValues(Product product, Map<Long, List<NutritionalValueDto>> dtoGroupedById) {
         product.getNutritionalValues()
-                .stream()
-                .filter(value -> !dtoGroupedById.containsKey(value.getId()))
-                .forEach(product::removeNutritionalValue);
+                .removeIf(value -> !dtoGroupedById.containsKey(value.getId()));
     }
 
     private void addNutritionalValues(Product product, List<NutritionalValueDto> valuesDto) {

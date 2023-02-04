@@ -11,17 +11,21 @@ import com.home.smoothieshop.model.enums.MacroNutrient;
 import com.home.smoothieshop.model.enums.MicroNutrient;
 import com.home.smoothieshop.model.enums.NutrientType;
 import com.home.smoothieshop.model.enums.NutrientUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class ProductService {
+    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     private final ProductRepository productRepository;
 
@@ -85,17 +89,34 @@ public class ProductService {
         valuesDto
                 .stream()
                 .filter(dto -> isNull(dto.id()))
-                .forEach(dto -> product.addNutritionalValue(toNutritionalValueEntity(dto)));
+                .forEach(dto -> addNutritionalValue(product, toNutritionalValueEntity(dto)));
     }
 
-    private void updateNutritionalValue(NutritionalValue oldValue, NutritionalValueDto dto) {
+    private void addNutritionalValue(Product product, NutritionalValue nutritionalValue) {
+        product.addNutritionalValue(nutritionalValue);
+        logger.info("NutritionalValue added [productId={} nutritionalValue={}]", product.getId(), nutritionalValue);
+    }
+
+    private void updateNutritionalValue(NutritionalValue valueToUpdate, NutritionalValueDto dto) {
         NutritionalValue newValue = toNutritionalValueEntity(dto);
 
-        oldValue.setNutrientType(newValue.getNutrientType());
-        oldValue.setMacroNutrient(newValue.getMacroNutrient());
-        oldValue.setMicroNutrient(newValue.getMicroNutrient());
-        oldValue.setNutrientUnit(newValue.getNutrientUnit());
-        oldValue.setNutrientValue(newValue.getNutrientValue());
+        // NutritionalValue .equals() method cannot be used here since it implements equality check by id only
+        if (Objects.equals(valueToUpdate.getNutrientType(), newValue.getNutrientType()) &&
+                Objects.equals(valueToUpdate.getMacroNutrient(), newValue.getMacroNutrient()) &&
+                Objects.equals(valueToUpdate.getMicroNutrient(), newValue.getMicroNutrient()) &&
+                Objects.equals(valueToUpdate.getNutrientUnit(), newValue.getNutrientUnit()) &&
+                Objects.equals(valueToUpdate.getNutrientValue(), newValue.getNutrientValue())
+        ) {
+            // Value is unchanged
+        } else {
+            valueToUpdate.setNutrientType(newValue.getNutrientType());
+            valueToUpdate.setMacroNutrient(newValue.getMacroNutrient());
+            valueToUpdate.setMicroNutrient(newValue.getMicroNutrient());
+            valueToUpdate.setNutrientUnit(newValue.getNutrientUnit());
+            valueToUpdate.setNutrientValue(newValue.getNutrientValue());
+
+            logger.info("NutritionalValue updated [productId={} nutritionalValue={}]", valueToUpdate.getProduct().getId(), valueToUpdate);
+        }
     }
 
     private NutritionalValue toNutritionalValueEntity(NutritionalValueDto dto) {

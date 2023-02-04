@@ -34,11 +34,6 @@ public class Product {
         nutritionalValue.setProduct(this);
     }
 
-    public void removeNutritionalValue(NutritionalValue nutritionalValue) {
-        nutritionalValues.remove(nutritionalValue);
-        nutritionalValue.setProduct(null);
-    }
-
     public List<NutritionalValue> getNutritionalValues() {
         return nutritionalValues;
     }

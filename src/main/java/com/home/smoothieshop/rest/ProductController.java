@@ -1,6 +1,5 @@
 package com.home.smoothieshop.rest;
 
-import com.home.smoothieshop.dto.NutritionalValueDto;
 import com.home.smoothieshop.dto.ProductDto;
 import com.home.smoothieshop.service.ProductService;
 import org.springframework.http.HttpStatus;

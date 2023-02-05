@@ -43,9 +43,4 @@ public class ProductController {
     public void updateProduct(@PathVariable long id, @Valid @RequestBody ProductDto productDto) {
         productService.updateProduct(id, productDto);
     }
-
-    @PutMapping("/products/{id}/details")
-    public void updateProductDetails(@PathVariable long id, @Valid @RequestBody List<NutritionalValueDto> nutritionalValueDto) {
-        productService.updateProductNutritionalValues(id, nutritionalValueDto);
-    }
 }

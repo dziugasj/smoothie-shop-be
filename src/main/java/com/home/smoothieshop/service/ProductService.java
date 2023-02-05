@@ -63,14 +63,6 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    @Transactional
-    public void updateProductNutritionalValues(long productId, List<NutritionalValueDto> valuesDto) {
-        Product product = findProduct(productId);
-        mapNutritionalValues(product, valuesDto);
-
-        productRepository.save(product);
-    }
-
     private Product findProduct(long productId) {
         return productRepository
                 .findById(productId)
